@@ -1,0 +1,37 @@
+{
+  "name": "gollumts-annotation",
+  "version": "1.0.0",
+  "description": "Add persistant annotation on TS class.",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:GollumJS/gollumts-annotation.git"
+  },
+  "keywords": [
+    "annotation",
+    "typescript",
+    "persistant"
+  ],
+  "author": "Damien Duboeuf <smeagolworms4@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/GollumJS/gollumts-annotation/issues"
+  },
+  "homepage": "https://github.com/GollumJS/gollumts-annotation/blob/master/README.md",
+  "dependencies": {
+  },
+  "files": [
+    "README.mb",
+    "LICENSE",
+    "package.json",
+    "index.ts",
+    "src/Reader.ts",
+    "src/CallbackParam.ts",
+    "src/Writer.ts",
+    "src/Metadata.ts"
+  ],
+  "devDependencies": {
+    "typescript": "^2.3.2"
+  }
+}
