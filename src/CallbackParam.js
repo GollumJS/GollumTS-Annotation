@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var CallbackParamObject = (function () {
+    function CallbackParamObject(callback) {
+        this._callback = callback;
+    }
+    Object.defineProperty(CallbackParamObject.prototype, "callback", {
+        get: function () {
+            return this._callback;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return CallbackParamObject;
+}());
+exports.CallbackParamObject = CallbackParamObject;
+function Callback(callback) {
+    return new CallbackParamObject(callback);
+}
+exports.Callback = Callback;
+//# sourceMappingURL=CallbackParam.js.map

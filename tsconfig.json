@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"module": "commonjs",
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"sourceMap": true,
+		"lib": [
+			"es5",
+			"ScriptHost",
+			"DOM",
+			"ES2015.Promise"
+		]
+	},
+	"files": [
+		"index.ts",
+		"src/Reader.ts",
+		"src/CallbackParam.ts",
+		"src/Writer.ts",
+		"src/Metadata.ts"
+	]
+}
