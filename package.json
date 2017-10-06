@@ -1,6 +1,6 @@
 {
   "name": "gollumts-annotation",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Add simple persistant annotation on TS class.",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,17 @@
     "src/Reader.ts",
     "src/CallbackParam.ts",
     "src/Writer.ts",
-    "src/Metadata.ts"
+    "src/Metadata.ts",
+    "index.js",
+    "src/Reader.js",
+    "src/CallbackParam.js",
+    "src/Writer.js",
+    "src/Metadata.js",
+    "index.js.map",
+    "src/Reader.js.map",
+    "src/CallbackParam.js.map",
+    "src/Writer.js.map",
+    "src/Metadata.js.map"
   ],
   "devDependencies": {
     "typescript": "^2.5.3"
