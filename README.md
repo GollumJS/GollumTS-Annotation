@@ -13,7 +13,7 @@ npm install gollumts-annotation
 ## Create annotation
 
 ```typescript
-import {Writer} from "gollumts-annoation";
+import {Writer} from "gollumts-annotation";
 
 
 export function CustomAnnotation(data1, data2) {
@@ -39,7 +39,7 @@ export class MyClass {
 
 
 ```typescript
-import {Reader} from "gollumts-annoation";
+import {Reader} from "gollumts-annotation";
 
 let myObject = new MyClass();
 
