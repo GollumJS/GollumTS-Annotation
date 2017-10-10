@@ -61,3 +61,18 @@ let annotation = Reader.getPropertyAnnotation(myObject, 'field', CustomAnnotatio
 
 
 ```
+
+## Create annotation with callback
+
+```typescript
+import {Writer} from "gollumts-annotation";
+
+export function CustomAnnotationCallback(data1, data2) {
+	return Writer.write(CustomAnnotationCallback, {
+		data1: data1,
+		data2: data2
+	}, (target: any, propertyKey: string = null, descriptor: PropertyDescriptor = null) => {
+		// Your implementation
+	});
+}
+```

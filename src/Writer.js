@@ -4,7 +4,8 @@ var Metadata_1 = require("./Metadata");
 var Writer = (function () {
     function Writer() {
     }
-    Writer.write = function (annotation, data) {
+    Writer.write = function (annotation, data, callback) {
+        if (callback === void 0) { callback = null; }
         var metadata = new Metadata_1.Metadata(annotation, data);
         return function (target, propertyKey, descriptor) {
             if (propertyKey === void 0) { propertyKey = null; }
@@ -23,6 +24,9 @@ var Writer = (function () {
             }
             else {
                 target.__metadata__.clazz.push(metadata);
+            }
+            if (callback) {
+                callback(target, propertyKey, descriptor);
             }
         };
     };

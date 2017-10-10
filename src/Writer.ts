@@ -3,7 +3,15 @@ import {Metadata} from "./Metadata";
 
 export class Writer {
 	
-	public static write(annotation: any, data: any) {
+	public static write(
+		annotation: any, 
+		data: any, 
+		callback: (
+			null |
+			((target: any) => void) |
+			((target: any, propertyKey: string, descriptor: PropertyDescriptor) => void)
+		) = null
+	) {
 		
 		let metadata = new Metadata(annotation, data);
 		
@@ -22,6 +30,10 @@ export class Writer {
 				target.__metadata__.properties[propertyKey].push(metadata);
 			} else {
 				target.__metadata__.clazz.push(metadata);
+			}
+			
+			if (callback) {
+				(<Function>callback)(target, propertyKey, descriptor);
 			}
 		};
 	}
