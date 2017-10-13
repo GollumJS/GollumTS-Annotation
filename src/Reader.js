@@ -26,6 +26,17 @@ var Reader = (function () {
     Reader.getPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.getPropertyAnnotations(clazz, name), annotation);
     };
+    Reader.getPropertiesNameWithAnnotations = function (clazz) {
+        var properties = [];
+        if (clazz.hasOwnProperty('__metadata__')) {
+            for (var prop in clazz.__metadata__.properties) {
+                if (properties.indexOf(prop) == -1) {
+                    properties.push(prop);
+                }
+            }
+        }
+        return properties;
+    };
     Reader.getPropertiesNameByAnnotations = function (clazz, annotations) {
         if (!Array.isArray(annotations)) {
             annotations = [annotations];
@@ -72,6 +83,16 @@ var Reader = (function () {
     };
     Reader.findPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.findPropertyAnnotations(clazz, name), annotation);
+    };
+    Reader.findPropertiesNameWithAnnotations = function (clazz) {
+        if (clazz == null) {
+            return [];
+        }
+        var properties = this.getPropertiesNameWithAnnotations(clazz);
+        if (typeof clazz.prototype !== 'undefined') {
+            properties = properties.concat(this.findPropertiesNameWithAnnotations(clazz.prototype));
+        }
+        return properties.concat(this.findPropertiesNameWithAnnotations(Object.getPrototypeOf(clazz)));
     };
     Reader.findPropertiesNameByAnnotations = function (clazz, annotations) {
         if (clazz == null) {

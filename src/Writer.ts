@@ -5,7 +5,7 @@ export class Writer {
 	
 	public static write(
 		annotation: any, 
-		data: any, 
+		data: any = {}, 
 		callback: (
 			null |
 			((target: any) => void) |

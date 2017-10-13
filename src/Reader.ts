@@ -32,6 +32,19 @@ export class Reader {
 		);
 	}
 	
+	
+	public static getPropertiesNameWithAnnotations(clazz: any): string[] {
+		let properties: string[] = [];
+		if (clazz.hasOwnProperty('__metadata__')) {
+			for (let prop in clazz.__metadata__.properties) {
+				if(properties.indexOf(prop) == -1) {
+					properties.push(prop);
+				}
+			}
+		}
+		return properties;
+	}
+	
 	public static getPropertiesNameByAnnotations(clazz: any, annotations: any[]|any): string[] {
 		if (!Array.isArray(annotations)) {
 			annotations = [annotations];
@@ -90,6 +103,20 @@ export class Reader {
 	public static findPropertyAnnotation(clazz: any, name: string, annotation: any): any|null {
 		return this.search(
 			this.findPropertyAnnotations(clazz, name), annotation
+		);
+	}
+	
+	public static findPropertiesNameWithAnnotations(clazz: any): string[] {
+		if (clazz == null) {
+			return [];
+		}
+		
+		let properties = this.getPropertiesNameWithAnnotations(clazz);
+		if (typeof clazz.prototype !== 'undefined') {
+			properties = properties.concat(this.findPropertiesNameWithAnnotations(clazz.prototype));
+		}
+		return properties.concat(
+			this.findPropertiesNameWithAnnotations(Object.getPrototypeOf(clazz))
 		);
 	}
 	

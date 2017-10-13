@@ -49,7 +49,7 @@ let annotations = Reader.findClassAnnotations(MyClass);
 let annotations = Reader.findClassAnnotations(myObject.constructor); 
 // annotations: Metatdata = [ 
 //    0: { 
-//        annotation: 
+//        annotation: CustomAnnotation,
 //        data: { 
 //             data1: 'Hello', 
 //             data1: 'world' 
@@ -67,7 +67,7 @@ let annotations = Reader.findPropertyAnnotations(MyClass, 'field');
 let annotations = Reader.findPropertyAnnotations(myObject, 'field');
 // annotations: Metatdata = [ 
 //    0: { 
-//        annotation: 
+//        annotation: CustomAnnotation,
 //        data: { 
 //             data1: 'Hello', 
 //             data1: 'world' 

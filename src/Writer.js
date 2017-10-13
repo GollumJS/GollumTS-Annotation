@@ -5,6 +5,7 @@ var Writer = (function () {
     function Writer() {
     }
     Writer.write = function (annotation, data, callback) {
+        if (data === void 0) { data = {}; }
         if (callback === void 0) { callback = null; }
         var metadata = new Metadata_1.Metadata(annotation, data);
         return function (target, propertyKey, descriptor) {
