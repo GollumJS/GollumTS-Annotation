@@ -26,6 +26,27 @@ var Reader = (function () {
     Reader.getPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.getPropertyAnnotations(clazz, name), annotation);
     };
+    Reader.getPropertiesNameByAnnotations = function (clazz, annotations) {
+        if (!Array.isArray(annotations)) {
+            annotations = [annotations];
+        }
+        var properties = [];
+        if (clazz.hasOwnProperty('__metadata__')) {
+            for (var prop in clazz.__metadata__.properties) {
+                var metadatas = clazz.__metadata__.properties[prop];
+                for (var _i = 0, metadatas_1 = metadatas; _i < metadatas_1.length; _i++) {
+                    var m = metadatas_1[_i];
+                    if (annotations.indexOf(m.annotation) != -1) {
+                        if (properties.indexOf(prop) == -1) {
+                            properties.push(prop);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return properties;
+    };
     Reader.findClassAnnotations = function (clazz) {
         if (clazz == null) {
             return [];
@@ -51,6 +72,16 @@ var Reader = (function () {
     };
     Reader.findPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.findPropertyAnnotations(clazz, name), annotation);
+    };
+    Reader.findPropertiesNameByAnnotations = function (clazz, annotations) {
+        if (clazz == null) {
+            return [];
+        }
+        var properties = this.getPropertiesNameByAnnotations(clazz, annotations);
+        if (typeof clazz.prototype !== 'undefined') {
+            properties = properties.concat(this.findPropertiesNameByAnnotations(clazz.prototype, annotations));
+        }
+        return properties.concat(this.findPropertiesNameByAnnotations(Object.getPrototypeOf(clazz), annotations));
     };
     Reader.unCallback = function (metadata) {
         var data = {};

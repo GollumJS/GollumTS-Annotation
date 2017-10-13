@@ -45,20 +45,39 @@ let myObject = new MyClass();
 
 // Class annotation //
 
-let annotations = Reader.getClassAnnotations(MyClass); // annotations = [ { data1: 'Hello', data1: 'world' } ]
-let annotations = Reader.getClassAnnotations(myObject); // annotations = [ { data1: 'Hello', data1: 'world' } ]
+let annotations = Reader.findClassAnnotations(MyClass);
+let annotations = Reader.findClassAnnotations(myObject.constructor); 
+// annotations: Metatdata = [ 
+//    0: { 
+//        annotation: 
+//        data: { 
+//             data1: 'Hello', 
+//             data1: 'world' 
+//        } 
+//    }
+// ]
 
-let annotation = Reader.getClassAnnotation(MyClass, CustomAnnotation); // annotation = { data1: 'Hello', data1: 'world' }
-let annotation = Reader.getClassAnnotation(myObject, CustomAnnotation); // annotation = { data1: 'Hello', data1: 'world' }
+let annotation = Reader.findClassAnnotation(MyClass, CustomAnnotation);
+let annotation = Reader.findClassAnnotation(myObject.constructor, CustomAnnotation); 
+// annotation = { data1: 'Hello', data1: 'world' }
 
 // Property annotation //
 
-let annotations = Reader.getPropertyAnnotations(MyClass, 'field'); // annotations = [ { data1: 'Every', data1: 'body' } ]
-let annotations = Reader.getPropertyAnnotations(myObject, 'field'); // annotations = [ { data1: 'Every', data1: 'body' } ]
+let annotations = Reader.findPropertyAnnotations(MyClass, 'field');
+let annotations = Reader.findPropertyAnnotations(myObject, 'field');
+// annotations: Metatdata = [ 
+//    0: { 
+//        annotation: 
+//        data: { 
+//             data1: 'Hello', 
+//             data1: 'world' 
+//        } 
+//    }
+// ]
 
-let annotation = Reader.getPropertyAnnotation(MyClass, 'field', CustomAnnotation); // annotation = { data1: 'Every', data1: 'body' }
-let annotation = Reader.getPropertyAnnotation(myObject, 'field', CustomAnnotation); // annotation = { data1: 'Every', data1: 'body' }
-
+let annotation = Reader.findPropertyAnnotation(MyClass, 'field', CustomAnnotation);
+let annotation = Reader.findPropertyAnnotation(myObject.constructor, 'field', CustomAnnotation);
+// annotation = { data1: 'Every', data1: 'body' }
 
 ```
 
@@ -75,4 +94,19 @@ export function CustomAnnotationCallback(data1, data2) {
 		// Your implementation
 	});
 }
+```
+
+
+## List properties for annotations
+
+```typescript
+import {Reader} from "gollumts-annotation";
+
+let properties: string[] = Reader.findPropertiesNameByAnnotations(MyClass, CustomAnnotation);
+let properties: string[] = Reader.findPropertiesNameByAnnotations(MyClass, [ CustomAnnotation, ... ]);
+// properties = [
+//  'field'
+// ]
+
+
 ```

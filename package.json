@@ -1,28 +1,42 @@
 {
-  "name": "gollumts-annotation",
-  "version": "2.0.0",
-  "description": "Add simple persistant annotation on TS class.",
-  "main": "index.js",
-  "scripts": {
-    "build": "node node_modules/typescript/bin/tsc -p tsconfig.json"
+  "_from": "gollumts-annotation@2.0.0",
+  "_id": "gollumts-annotation@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-2rZquriCmKfTD0Jq7HTea3Qb7due4mvvAokYskVD7IM6oDq18H7EC3BIZkwBQibpiBORMVkCIrr8cOKo8IHZUQ==",
+  "_location": "/gollumts-annotation",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "gollumts-annotation@2.0.0",
+    "name": "gollumts-annotation",
+    "escapedName": "gollumts-annotation",
+    "rawSpec": "2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "2.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:GollumJS/gollumts-annotation.git"
-  },
-  "keywords": [
-    "simple",
-    "annotation",
-    "typescript",
-    "persistant",
-    "decorator"
+  "_requiredBy": [
+    "#USER",
+    "/"
   ],
-  "author": "Damien Duboeuf <smeagolworms4@gmail.com>",
+  "_resolved": "https://registry.npmjs.org/gollumts-annotation/-/gollumts-annotation-2.0.0.tgz",
+  "_shasum": "558aadb0b94628663b53a2e8e03f1466d108bc14",
+  "_spec": "gollumts-annotation@2.0.0",
+  "_where": "/home/smeagol/Works/Redori/TeamBudd.io/git2",
+  "author": {
+    "name": "Damien Duboeuf",
+    "email": "smeagolworms4@gmail.com"
+  },
   "bugs": {
     "url": "https://github.com/GollumJS/gollumts-annotation/issues"
   },
-  "homepage": "https://github.com/GollumJS/gollumts-annotation/blob/master/README.md",
+  "bundleDependencies": false,
   "dependencies": {},
+  "deprecated": false,
+  "description": "Add simple persistant annotation on TS class.",
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  },
   "files": [
     "README.mb",
     "LICENSE",
@@ -43,7 +57,22 @@
     "src/Writer.js.map",
     "src/Metadata.js.map"
   ],
-  "devDependencies": {
-    "typescript": "^2.5.3"
-  }
+  "homepage": "https://github.com/GollumJS/gollumts-annotation/blob/master/README.md",
+  "keywords": [
+    "simple",
+    "annotation",
+    "typescript",
+    "persistant",
+    "decorator"
+  ],
+  "main": "index.js",
+  "name": "gollumts-annotation",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/GollumJS/gollumts-annotation.git"
+  },
+  "scripts": {
+    "build": "node node_modules/typescript/bin/tsc -p tsconfig.json"
+  },
+  "version": "2.0.0"
 }
