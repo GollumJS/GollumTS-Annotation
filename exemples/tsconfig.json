@@ -13,10 +13,11 @@
 		]
 	},
 	"files": [
-		"index.ts",
-		"src/Reader.ts",
-		"src/CallbackParam.ts",
-		"src/Writer.ts",
-		"src/Metadata.ts",
+		"../index.ts",
+		"../src/Reader.ts",
+		"../src/CallbackParam.ts",
+		"../src/Writer.ts",
+		"../src/Metadata.ts",
+		"hello-world.ts",
 	]
 }

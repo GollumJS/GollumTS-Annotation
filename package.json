@@ -1,10 +1,11 @@
 {
   "name": "gollumts-annotation",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Add simple persistant annotation on TS class.",
   "main": "index.js",
   "scripts": {
-    "build": "node node_modules/typescript/bin/tsc -p tsconfig.json"
+    "build": "node node_modules/typescript/bin/tsc -p tsconfig.json",
+    "build:exemples": "node node_modules/typescript/bin/tsc -p exemples/tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -33,19 +34,18 @@
     "src/CallbackParam.ts",
     "src/Writer.ts",
     "src/Metadata.ts",
-    "exemples/hello-world.ts",
     "index.js",
     "src/Reader.js",
     "src/CallbackParam.js",
     "src/Writer.js",
     "src/Metadata.js",
-    "exemples/hello-world.js",
     "index.js.map",
     "src/Reader.js.map",
     "src/CallbackParam.js.map",
     "src/Writer.js.map",
     "src/Metadata.js.map",
-    "exemples/hello-world.js.map"
+    "exemples/tsconfig.json",
+    "exemples/hello-world.ts"
   ],
   "devDependencies": {
     "typescript": "^2.5.3"
