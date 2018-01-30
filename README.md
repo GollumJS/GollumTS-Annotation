@@ -17,7 +17,7 @@ import {Writer} from "gollumts-annotation";
 
 
 export function CustomAnnotation(data1, data2) {
-	
+
 	return Writer.write(CustomAnnotation, {
 		data1: data1,
 		data2: data2
@@ -27,10 +27,10 @@ export function CustomAnnotation(data1, data2) {
 
 @CustomAnnotation('Hello', 'world')
 export class MyClass {
-	
+
 	@CustomAnnotation('Every', 'body')
 	public field ;
-	
+
 }
 
 ```
@@ -46,32 +46,32 @@ let myObject = new MyClass();
 // Class annotation //
 
 let annotations = Reader.findClassAnnotations(MyClass);
-let annotations = Reader.findClassAnnotations(myObject.constructor); 
-// annotations: Metatdata = [ 
-//    0: { 
+let annotations = Reader.findClassAnnotations(myObject.constructor);
+// annotations: Metatdata = [
+//    0: {
 //        annotation: CustomAnnotation,
-//        data: { 
-//             data1: 'Hello', 
-//             data1: 'world' 
-//        } 
+//        data: {
+//             data1: 'Hello',
+//             data1: 'world'
+//        }
 //    }
 // ]
 
 let annotation = Reader.findClassAnnotation(MyClass, CustomAnnotation);
-let annotation = Reader.findClassAnnotation(myObject.constructor, CustomAnnotation); 
+let annotation = Reader.findClassAnnotation(myObject.constructor, CustomAnnotation);
 // annotation = { data1: 'Hello', data1: 'world' }
 
 // Property annotation //
 
 let annotations = Reader.findPropertyAnnotations(MyClass, 'field');
-let annotations = Reader.findPropertyAnnotations(myObject, 'field');
-// annotations: Metatdata = [ 
-//    0: { 
+let annotations = Reader.findPropertyAnnotations(myObject.constructor, 'field');
+// annotations: Metatdata = [
+//    0: {
 //        annotation: CustomAnnotation,
-//        data: { 
-//             data1: 'Hello', 
-//             data1: 'world' 
-//        } 
+//        data: {
+//             data1: 'Hello',
+//             data1: 'world'
+//        }
 //    }
 // ]
 
@@ -102,7 +102,7 @@ export function CustomAnnotationCallback(data1, data2) {
 ```typescript
 import {Reader} from "gollumts-annotation";
 
-let properties: string[] = Reader.findPropertiesNameByAnnotations(MyClass, CustomAnnotation);
+let properties: string[] = Reader.findPropertiesNameByAnnotation(MyClass, CustomAnnotation);
 let properties: string[] = Reader.findPropertiesNameByAnnotations(MyClass, [ CustomAnnotation, ... ]);
 // properties = [
 //  'field'

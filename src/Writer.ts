@@ -4,8 +4,8 @@ import {Metadata} from "./Metadata";
 export class Writer {
 	
 	public static write(
-		annotation: any, 
-		data: any = {}, 
+		annotation: any,
+		data: any = {},
 		callback: (
 			null |
 			((target: any) => void) |
@@ -17,19 +17,20 @@ export class Writer {
 		
 		return function (target: any, propertyKey: string = null, descriptor: PropertyDescriptor = null) {
 			
-			if (!target.hasOwnProperty('__metadata__')) {
-				target.__metadata__ = {
+			if (!target.hasOwnProperty('__gts_annotations__')) {
+				target.__gts_annotations__ = {
 					clazz: [],
-					properties: {}
+					properties: {},
+					cache: {}
 				};
 			}
 			if (propertyKey) {
-				if (!target.__metadata__.properties.hasOwnProperty(propertyKey)) {
-					target.__metadata__.properties[propertyKey] = [];
+				if (!target.__gts_annotations__.properties.hasOwnProperty(propertyKey)) {
+					target.__gts_annotations__.properties[propertyKey] = [];
 				}
-				target.__metadata__.properties[propertyKey].push(metadata);
+				target.__gts_annotations__.properties[propertyKey].push(metadata);
 			} else {
-				target.__metadata__.clazz.push(metadata);
+				target.__gts_annotations__.clazz.push(metadata);
 			}
 			
 			if (callback) {

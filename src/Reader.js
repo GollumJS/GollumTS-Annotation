@@ -6,20 +6,20 @@ var Reader = (function () {
     function Reader() {
     }
     Reader.getClassAnnotations = function (clazz) {
-        if (!clazz.hasOwnProperty('__metadata__')) {
+        if (!clazz.hasOwnProperty('__gts_annotations__')) {
             return [];
         }
-        return Array.prototype.concat.call(clazz.__metadata__.clazz, []).map(Reader.unCallback);
+        return Array.prototype.concat.call(clazz.__gts_annotations__.clazz, []).map(Reader.unCallback);
     };
     Reader.getClassAnnotation = function (clazz, annotation) {
         return this.search(this.getClassAnnotations(clazz), annotation);
     };
     Reader.getPropertyAnnotations = function (clazz, name) {
-        if (!clazz.hasOwnProperty('__metadata__')) {
+        if (!clazz.hasOwnProperty('__gts_annotations__')) {
             return [];
         }
-        if (clazz.__metadata__.properties.hasOwnProperty(name)) {
-            return Array.prototype.concat.call(clazz.__metadata__.properties[name], []).map(Reader.unCallback);
+        if (clazz.__gts_annotations__.properties.hasOwnProperty(name)) {
+            return Array.prototype.concat.call(clazz.__gts_annotations__.properties[name], []).map(Reader.unCallback);
         }
         return [];
     };
@@ -27,82 +27,140 @@ var Reader = (function () {
         return this.search(this.getPropertyAnnotations(clazz, name), annotation);
     };
     Reader.getPropertiesNameWithAnnotations = function (clazz) {
-        var properties = [];
-        if (clazz.hasOwnProperty('__metadata__')) {
-            for (var prop in clazz.__metadata__.properties) {
-                if (properties.indexOf(prop) == -1) {
-                    properties.push(prop);
-                }
-            }
+        if (clazz.hasOwnProperty('__gts_annotations__')) {
+            return Object.keys(clazz.__gts_annotations__.properties)
+                .filter(function (v, i, a) { return a.indexOf(v) === i; });
         }
-        return properties;
+        return [];
     };
-    Reader.getPropertiesNameByAnnotations = function (clazz, annotations) {
-        if (!Array.isArray(annotations)) {
-            annotations = [annotations];
-        }
+    Reader.getPropertiesNameByAnnotation = function (clazz, annotation) {
         var properties = [];
-        if (clazz.hasOwnProperty('__metadata__')) {
-            for (var prop in clazz.__metadata__.properties) {
-                var metadatas = clazz.__metadata__.properties[prop];
-                for (var _i = 0, metadatas_1 = metadatas; _i < metadatas_1.length; _i++) {
-                    var m = metadatas_1[_i];
-                    if (annotations.indexOf(m.annotation) != -1) {
-                        if (properties.indexOf(prop) == -1) {
-                            properties.push(prop);
-                        }
+        if (clazz.hasOwnProperty('__gts_annotations__')) {
+            for (var _i = 0, _a = Object.keys(clazz.__gts_annotations__.properties); _i < _a.length; _i++) {
+                var prop = _a[_i];
+                var metadatas = clazz.__gts_annotations__.properties[prop];
+                for (var _b = 0, metadatas_1 = metadatas; _b < metadatas_1.length; _b++) {
+                    var m = metadatas_1[_b];
+                    if (annotation == m.annotation) {
+                        properties.push(prop);
                         break;
                     }
                 }
             }
         }
-        return properties;
+        return properties.filter(function (v, i, a) { return a.indexOf(v) === i; });
     };
     Reader.findClassAnnotations = function (clazz) {
-        if (clazz == null) {
+        if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        var annotations = this.getClassAnnotations(clazz);
-        if (typeof clazz.prototype !== 'undefined') {
-            annotations = annotations.concat(this.findClassAnnotations(clazz.prototype));
+        if (!clazz.hasOwnProperty('__gts_annotations__')) {
+            clazz.__gts_annotations__ = {
+                clazz: [],
+                properties: {},
+                cache: {}
+            };
         }
-        return annotations.concat(this.findClassAnnotations(Object.getPrototypeOf(clazz)));
+        if (!clazz.__gts_annotations__.cache.clazz) {
+            var annotations = this.getClassAnnotations(clazz);
+            if (typeof clazz.prototype !== 'undefined') {
+                annotations = annotations.concat(this.findClassAnnotations(clazz.prototype));
+            }
+            clazz.__gts_annotations__.cache.clazz = annotations.concat(this.findClassAnnotations(Object.getPrototypeOf(clazz)));
+        }
+        return clazz.__gts_annotations__.cache.clazz;
     };
     Reader.findClassAnnotation = function (clazz, annotation) {
         return this.search(this.findClassAnnotations(clazz), annotation);
     };
     Reader.findPropertyAnnotations = function (clazz, name) {
-        if (clazz == null) {
+        if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        var annotations = this.getPropertyAnnotations(clazz, name);
-        if (typeof clazz.prototype !== 'undefined') {
-            annotations = annotations.concat(this.findPropertyAnnotations(clazz.prototype, name));
+        if (!clazz.hasOwnProperty('__gts_annotations__')) {
+            clazz.__gts_annotations__ = {
+                clazz: [],
+                properties: {},
+                cache: {}
+            };
         }
-        return annotations.concat(this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name));
+        if (!clazz.__gts_annotations__.cache.properties) {
+            clazz.__gts_annotations__.cache.properties = {};
+        }
+        if (!clazz.__gts_annotations__.cache.properties[name]) {
+            var annotations = this.getPropertyAnnotations(clazz, name);
+            if (typeof clazz.prototype !== 'undefined') {
+                annotations = annotations.concat(this.findPropertyAnnotations(clazz.prototype, name));
+            }
+            clazz.__gts_annotations__.cache.properties[name] = annotations.concat(this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name));
+        }
+        return clazz.__gts_annotations__.cache.properties[name];
     };
     Reader.findPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.findPropertyAnnotations(clazz, name), annotation);
     };
     Reader.findPropertiesNameWithAnnotations = function (clazz) {
-        if (clazz == null) {
+        if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        var properties = this.getPropertiesNameWithAnnotations(clazz);
-        if (typeof clazz.prototype !== 'undefined') {
-            properties = properties.concat(this.findPropertiesNameWithAnnotations(clazz.prototype));
+        if (!clazz.hasOwnProperty('__gts_annotations__')) {
+            clazz.__gts_annotations__ = {
+                clazz: [],
+                properties: {},
+                cache: {}
+            };
         }
-        return properties.concat(this.findPropertiesNameWithAnnotations(Object.getPrototypeOf(clazz)));
+        if (!clazz.__gts_annotations__.cache.properties_with) {
+            var properties = this.getPropertiesNameWithAnnotations(clazz);
+            if (typeof clazz.prototype !== 'undefined') {
+                properties = properties.concat(this.findPropertiesNameWithAnnotations(clazz.prototype));
+            }
+            clazz.__gts_annotations__.cache.properties_with = properties
+                .concat(this.findPropertiesNameWithAnnotations(Object.getPrototypeOf(clazz)))
+                .filter(function (v, i, a) { return a.indexOf(v) === i; });
+        }
+        return clazz.__gts_annotations__.cache.properties_with;
+    };
+    Reader.findPropertiesNameByAnnotation = function (clazz, annotation) {
+        if (clazz == null || clazz === Object || clazz === Object.prototype) {
+            return [];
+        }
+        if (!clazz.hasOwnProperty('__gts_annotations__')) {
+            clazz.__gts_annotations__ = {
+                clazz: [],
+                properties: {},
+                cache: {}
+            };
+        }
+        if (!clazz.__gts_annotations__.cache.properties_by) {
+            clazz.__gts_annotations__.cache.properties_by = [];
+        }
+        var searched = clazz.__gts_annotations__.cache.properties_by
+            .filter(function (propertiesBy) { return propertiesBy.annotation == annotation; });
+        if (searched.length) {
+            return searched[0].properties;
+        }
+        var properties = this.getPropertiesNameByAnnotation(clazz, annotation);
+        if (typeof clazz.prototype !== 'undefined') {
+            properties = properties
+                .concat(this.findPropertiesNameByAnnotation(clazz.prototype, annotation));
+        }
+        properties = properties.concat(this.findPropertiesNameByAnnotation(Object.getPrototypeOf(clazz), annotation)
+            .filter(function (v, i, a) { return a.indexOf(v) === i; }));
+        clazz.__gts_annotations__.cache.properties_by.push({
+            annotation: annotation,
+            properties: properties,
+        });
+        return properties;
     };
     Reader.findPropertiesNameByAnnotations = function (clazz, annotations) {
-        if (clazz == null) {
-            return [];
+        var properties = [];
+        for (var _i = 0, annotations_1 = annotations; _i < annotations_1.length; _i++) {
+            var a = annotations_1[_i];
+            properties = properties.concat(this.findPropertiesNameByAnnotation(clazz, a));
         }
-        var properties = this.getPropertiesNameByAnnotations(clazz, annotations);
-        if (typeof clazz.prototype !== 'undefined') {
-            properties = properties.concat(this.findPropertiesNameByAnnotations(clazz.prototype, annotations));
-        }
-        return properties.concat(this.findPropertiesNameByAnnotations(Object.getPrototypeOf(clazz), annotations));
+        properties = properties.filter(function (v, i, a) { return a.indexOf(v) === i; });
+        return properties;
     };
     Reader.unCallback = function (metadata) {
         var data = {};

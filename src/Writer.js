@@ -11,20 +11,21 @@ var Writer = (function () {
         return function (target, propertyKey, descriptor) {
             if (propertyKey === void 0) { propertyKey = null; }
             if (descriptor === void 0) { descriptor = null; }
-            if (!target.hasOwnProperty('__metadata__')) {
-                target.__metadata__ = {
+            if (!target.hasOwnProperty('__gts_annotations__')) {
+                target.__gts_annotations__ = {
                     clazz: [],
-                    properties: {}
+                    properties: {},
+                    cache: {}
                 };
             }
             if (propertyKey) {
-                if (!target.__metadata__.properties.hasOwnProperty(propertyKey)) {
-                    target.__metadata__.properties[propertyKey] = [];
+                if (!target.__gts_annotations__.properties.hasOwnProperty(propertyKey)) {
+                    target.__gts_annotations__.properties[propertyKey] = [];
                 }
-                target.__metadata__.properties[propertyKey].push(metadata);
+                target.__gts_annotations__.properties[propertyKey].push(metadata);
             }
             else {
-                target.__metadata__.clazz.push(metadata);
+                target.__gts_annotations__.clazz.push(metadata);
             }
             if (callback) {
                 callback(target, propertyKey, descriptor);

@@ -5,11 +5,11 @@
 		"removeComments": true,
 		"preserveConstEnums": true,
 		"sourceMap": true,
+		"experimentalDecorators": true,
 		"lib": [
 			"es5",
 			"ScriptHost",
 			"DOM",
-			"ES2015.Promise"
 		]
 	},
 	"files": [
@@ -17,6 +17,7 @@
 		"src/Reader.ts",
 		"src/CallbackParam.ts",
 		"src/Writer.ts",
-		"src/Metadata.ts"
+		"src/Metadata.ts",
+		"exemples/hello-world.ts"
 	]
 }
