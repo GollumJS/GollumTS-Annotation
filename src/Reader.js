@@ -87,14 +87,14 @@ var Reader = (function () {
         if (!clazz.__gts_annotations__.cache.properties) {
             clazz.__gts_annotations__.cache.properties = {};
         }
-        if (!clazz.__gts_annotations__.cache.properties[name]) {
+        if (!clazz.__gts_annotations__.cache.properties['__' + name]) {
             var annotations = this.getPropertyAnnotations(clazz, name);
             if (typeof clazz.prototype !== 'undefined') {
                 annotations = annotations.concat(this.findPropertyAnnotations(clazz.prototype, name));
             }
-            clazz.__gts_annotations__.cache.properties[name] = annotations.concat(this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name));
+            clazz.__gts_annotations__.cache.properties['__' + name] = annotations.concat(this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name));
         }
-        return clazz.__gts_annotations__.cache.properties[name];
+        return clazz.__gts_annotations__.cache.properties['__' + name];
     };
     Reader.findPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.findPropertyAnnotations(clazz, name), annotation);

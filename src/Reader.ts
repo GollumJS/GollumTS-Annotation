@@ -105,16 +105,16 @@ export class Reader {
 			clazz.__gts_annotations__.cache.properties = {};
 		}
 		
-		if (!clazz.__gts_annotations__.cache.properties[name]) {
+		if (!clazz.__gts_annotations__.cache.properties['__'+name]) {
 			let annotations = this.getPropertyAnnotations(clazz, name);
 			if (typeof clazz.prototype !== 'undefined') {
 				annotations = annotations.concat(this.findPropertyAnnotations(clazz.prototype, name));
 			}
-			clazz.__gts_annotations__.cache.properties[name] = annotations.concat(
+			clazz.__gts_annotations__.cache.properties['__'+name] = annotations.concat(
 				this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name)
 			);
 		}
-		return clazz.__gts_annotations__.cache.properties[name];
+		return clazz.__gts_annotations__.cache.properties['__'+name];
 	}
 	
 	public static findPropertyAnnotation(clazz: any, name: string, annotation: any): any|null {
