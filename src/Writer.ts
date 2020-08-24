@@ -34,7 +34,10 @@ export class Writer {
 			}
 			
 			if (callback) {
-				(<Function>callback)(target, propertyKey, descriptor);
+				const result = (<Function>callback)(target, propertyKey, descriptor);
+				if (result) {
+					return result;
+				}
 			}
 		};
 	}

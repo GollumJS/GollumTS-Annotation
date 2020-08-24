@@ -28,7 +28,10 @@ var Writer = (function () {
                 target.__gts_annotations__.clazz.push(metadata);
             }
             if (callback) {
-                callback(target, propertyKey, descriptor);
+                var result = callback(target, propertyKey, descriptor);
+                if (result) {
+                    return result;
+                }
             }
         };
     };
