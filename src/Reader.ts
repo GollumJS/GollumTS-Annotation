@@ -201,19 +201,17 @@ export class Reader {
 	
 	
 	private static unCallback(metadata: Metadata): Metadata {
-		let data = {};
-		
 		for (let key in metadata.data) {
 			if (metadata.data[key] instanceof CallbackParamObject) {
-				data[key] = metadata.data[key].callback();
+				metadata.data[key] = metadata.data[key].callback();
 			} else {
-				data[key] = metadata.data[key];
+				metadata.data[key] = metadata.data[key];
 			}
 		}
 		
 		return new Metadata(
 			metadata.annotation,
-			data
+			metadata.data
 		);
 	}
 	

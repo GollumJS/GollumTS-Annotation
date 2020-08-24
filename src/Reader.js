@@ -163,16 +163,15 @@ var Reader = (function () {
         return properties;
     };
     Reader.unCallback = function (metadata) {
-        var data = {};
         for (var key in metadata.data) {
             if (metadata.data[key] instanceof CallbackParam_1.CallbackParamObject) {
-                data[key] = metadata.data[key].callback();
+                metadata.data[key] = metadata.data[key].callback();
             }
             else {
-                data[key] = metadata.data[key];
+                metadata.data[key] = metadata.data[key];
             }
         }
-        return new Metadata_1.Metadata(metadata.annotation, data);
+        return new Metadata_1.Metadata(metadata.annotation, metadata.data);
     };
     Reader.search = function (list, annotation) {
         for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
