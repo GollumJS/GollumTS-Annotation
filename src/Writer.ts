@@ -3,6 +3,12 @@ import {Metadata} from "./Metadata";
 
 export class Writer {
 	
+	public static readonly annotations: Map<any, {
+		clazz: any[],
+		properties: any,
+		cache: any
+	}> = new Map();
+	
 	public static write(
 		annotation: any,
 		data: any = {},
@@ -17,20 +23,22 @@ export class Writer {
 		
 		return function (target: any, propertyKey: string = null, descriptor: PropertyDescriptor = null) {
 			
-			if (!target.hasOwnProperty('__gts_annotations__')) {
-				target.__gts_annotations__ = {
+			let annotations = Writer.annotations.get(target);
+			if (!annotations) {
+				annotations = {
 					clazz: [],
 					properties: {},
 					cache: {}
 				};
+				Writer.annotations.set(target, annotations);
 			}
 			if (propertyKey) {
-				if (!target.__gts_annotations__.properties.hasOwnProperty(propertyKey)) {
-					target.__gts_annotations__.properties[propertyKey] = [];
+				if (!annotations.properties.hasOwnProperty(propertyKey)) {
+					annotations.properties[propertyKey] = [];
 				}
-				target.__gts_annotations__.properties[propertyKey].push(metadata);
+				annotations.properties[propertyKey].push(metadata);
 			} else {
-				target.__gts_annotations__.clazz.push(metadata);
+				annotations.clazz.push(metadata);
 			}
 			
 			if (callback) {

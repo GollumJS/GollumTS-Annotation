@@ -2,24 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Metadata_1 = require("./Metadata");
 var CallbackParam_1 = require("./CallbackParam");
+var Writer_1 = require("./Writer");
 var Reader = (function () {
     function Reader() {
     }
     Reader.getClassAnnotations = function (clazz) {
-        if (!clazz.hasOwnProperty('__gts_annotations__')) {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (!annotationsMap) {
             return [];
         }
-        return Array.prototype.concat.call(clazz.__gts_annotations__.clazz, []).map(Reader.unCallback);
+        return Array.prototype.concat.call(annotationsMap.clazz, []).map(Reader.unCallback);
     };
     Reader.getClassAnnotation = function (clazz, annotation) {
         return this.search(this.getClassAnnotations(clazz), annotation);
     };
     Reader.getPropertyAnnotations = function (clazz, name) {
-        if (!clazz.hasOwnProperty('__gts_annotations__')) {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (!annotationsMap) {
             return [];
         }
-        if (clazz.__gts_annotations__.properties.hasOwnProperty(name)) {
-            return Array.prototype.concat.call(clazz.__gts_annotations__.properties[name], []).map(Reader.unCallback);
+        if (annotationsMap.properties.hasOwnProperty(name)) {
+            return Array.prototype.concat.call(annotationsMap.properties[name], []).map(Reader.unCallback);
         }
         return [];
     };
@@ -27,18 +30,20 @@ var Reader = (function () {
         return this.search(this.getPropertyAnnotations(clazz, name), annotation);
     };
     Reader.getPropertiesNameWithAnnotations = function (clazz) {
-        if (clazz.hasOwnProperty('__gts_annotations__')) {
-            return Object.keys(clazz.__gts_annotations__.properties)
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (annotationsMap) {
+            return Object.keys(annotationsMap.properties)
                 .filter(function (v, i, a) { return a.indexOf(v) === i; });
         }
         return [];
     };
     Reader.getPropertiesNameByAnnotation = function (clazz, annotation) {
         var properties = [];
-        if (clazz.hasOwnProperty('__gts_annotations__')) {
-            for (var _i = 0, _a = Object.keys(clazz.__gts_annotations__.properties); _i < _a.length; _i++) {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (annotationsMap) {
+            for (var _i = 0, _a = Object.keys(annotationsMap.properties); _i < _a.length; _i++) {
                 var prop = _a[_i];
-                var metadatas = clazz.__gts_annotations__.properties[prop];
+                var metadatas = annotationsMap.properties[prop];
                 for (var _b = 0, metadatas_1 = metadatas; _b < metadatas_1.length; _b++) {
                     var m = metadatas_1[_b];
                     if (annotation == m.annotation) {
@@ -54,21 +59,23 @@ var Reader = (function () {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        if (!clazz.hasOwnProperty('__gts_annotations__')) {
-            clazz.__gts_annotations__ = {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (!annotationsMap) {
+            annotationsMap = {
                 clazz: [],
                 properties: {},
                 cache: {}
             };
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
-        if (!clazz.__gts_annotations__.cache.clazz) {
+        if (!annotationsMap.cache.clazz) {
             var annotations = this.getClassAnnotations(clazz);
             if (typeof clazz.prototype !== 'undefined') {
                 annotations = annotations.concat(this.findClassAnnotations(clazz.prototype));
             }
-            clazz.__gts_annotations__.cache.clazz = annotations.concat(this.findClassAnnotations(Object.getPrototypeOf(clazz)));
+            annotationsMap.cache.clazz = annotations.concat(this.findClassAnnotations(Object.getPrototypeOf(clazz)));
         }
-        return clazz.__gts_annotations__.cache.clazz;
+        return annotationsMap.cache.clazz;
     };
     Reader.findClassAnnotation = function (clazz, annotation) {
         return this.search(this.findClassAnnotations(clazz), annotation);
@@ -77,24 +84,26 @@ var Reader = (function () {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        if (!clazz.hasOwnProperty('__gts_annotations__')) {
-            clazz.__gts_annotations__ = {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (!annotationsMap) {
+            annotationsMap = {
                 clazz: [],
                 properties: {},
                 cache: {}
             };
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
-        if (!clazz.__gts_annotations__.cache.properties) {
-            clazz.__gts_annotations__.cache.properties = {};
+        if (!annotationsMap.cache.properties) {
+            annotationsMap.cache.properties = {};
         }
-        if (!clazz.__gts_annotations__.cache.properties['__' + name]) {
+        if (!annotationsMap.cache.properties['__' + name]) {
             var annotations = this.getPropertyAnnotations(clazz, name);
             if (typeof clazz.prototype !== 'undefined') {
                 annotations = annotations.concat(this.findPropertyAnnotations(clazz.prototype, name));
             }
-            clazz.__gts_annotations__.cache.properties['__' + name] = annotations.concat(this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name));
+            annotationsMap.cache.properties['__' + name] = annotations.concat(this.findPropertyAnnotations(Object.getPrototypeOf(clazz), name));
         }
-        return clazz.__gts_annotations__.cache.properties['__' + name];
+        return annotationsMap.cache.properties['__' + name];
     };
     Reader.findPropertyAnnotation = function (clazz, name, annotation) {
         return this.search(this.findPropertyAnnotations(clazz, name), annotation);
@@ -103,39 +112,43 @@ var Reader = (function () {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        if (!clazz.hasOwnProperty('__gts_annotations__')) {
-            clazz.__gts_annotations__ = {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (!annotationsMap) {
+            annotationsMap = {
                 clazz: [],
                 properties: {},
                 cache: {}
             };
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
-        if (!clazz.__gts_annotations__.cache.properties_with) {
+        if (!annotationsMap.cache.properties_with) {
             var properties = this.getPropertiesNameWithAnnotations(clazz);
             if (typeof clazz.prototype !== 'undefined') {
                 properties = properties.concat(this.findPropertiesNameWithAnnotations(clazz.prototype));
             }
-            clazz.__gts_annotations__.cache.properties_with = properties
+            annotationsMap.cache.properties_with = properties
                 .concat(this.findPropertiesNameWithAnnotations(Object.getPrototypeOf(clazz)))
                 .filter(function (v, i, a) { return a.indexOf(v) === i; });
         }
-        return clazz.__gts_annotations__.cache.properties_with;
+        return annotationsMap.cache.properties_with;
     };
     Reader.findPropertiesNameByAnnotation = function (clazz, annotation) {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        if (!clazz.hasOwnProperty('__gts_annotations__')) {
-            clazz.__gts_annotations__ = {
+        var annotationsMap = Writer_1.Writer.annotations.get(clazz);
+        if (!annotationsMap) {
+            annotationsMap = {
                 clazz: [],
                 properties: {},
                 cache: {}
             };
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
-        if (!clazz.__gts_annotations__.cache.properties_by) {
-            clazz.__gts_annotations__.cache.properties_by = [];
+        if (!annotationsMap.cache.properties_by) {
+            annotationsMap.cache.properties_by = [];
         }
-        var searched = clazz.__gts_annotations__.cache.properties_by
+        var searched = annotationsMap.cache.properties_by
             .filter(function (propertiesBy) { return propertiesBy.annotation == annotation; });
         if (searched.length) {
             return searched[0].properties;
@@ -147,7 +160,7 @@ var Reader = (function () {
         }
         properties = properties.concat(this.findPropertiesNameByAnnotation(Object.getPrototypeOf(clazz), annotation)
             .filter(function (v, i, a) { return a.indexOf(v) === i; }));
-        clazz.__gts_annotations__.cache.properties_by.push({
+        annotationsMap.cache.properties_by.push({
             annotation: annotation,
             properties: properties,
         });

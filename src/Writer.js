@@ -11,21 +11,23 @@ var Writer = (function () {
         return function (target, propertyKey, descriptor) {
             if (propertyKey === void 0) { propertyKey = null; }
             if (descriptor === void 0) { descriptor = null; }
-            if (!target.hasOwnProperty('__gts_annotations__')) {
-                target.__gts_annotations__ = {
+            var annotations = Writer.annotations.get(target);
+            if (!annotations) {
+                annotations = {
                     clazz: [],
                     properties: {},
                     cache: {}
                 };
+                Writer.annotations.set(target, annotations);
             }
             if (propertyKey) {
-                if (!target.__gts_annotations__.properties.hasOwnProperty(propertyKey)) {
-                    target.__gts_annotations__.properties[propertyKey] = [];
+                if (!annotations.properties.hasOwnProperty(propertyKey)) {
+                    annotations.properties[propertyKey] = [];
                 }
-                target.__gts_annotations__.properties[propertyKey].push(metadata);
+                annotations.properties[propertyKey].push(metadata);
             }
             else {
-                target.__gts_annotations__.clazz.push(metadata);
+                annotations.clazz.push(metadata);
             }
             if (callback) {
                 var result = callback(target, propertyKey, descriptor);
@@ -35,6 +37,7 @@ var Writer = (function () {
             }
         };
     };
+    Writer.annotations = new Map();
     return Writer;
 }());
 exports.Writer = Writer;
