@@ -1,0 +1,10 @@
+module.exports = {
+	preset: 'ts-jest',
+	testEnvironment: 'node',
+	testMatch: [ "./**/*.test.ts" ],
+	collectCoverage: true,
+	coverageReporters: [ "lcov", "html", "text" ],
+	collectCoverageFrom: [
+		'src/**/*.js'
+	],
+};

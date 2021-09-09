@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - "node"
+before_install:
+  - npm i -g makeshift && makeshift -s @bcoe -r https://registry.npmjs.org
+
+install:
+  - npm install
+
+script:
+  - npm run test
+
+deploy:
+  provider: npm
+  email: $LOGIN_PUBLISH
+  api_key: $NPM_TOKEN
+  on:
+    tags: true
+
+after_success:
+  - npx coveralls < coverage/lcov.info
+
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL

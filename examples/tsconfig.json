@@ -7,17 +7,15 @@
 		"sourceMap": true,
 		"experimentalDecorators": true,
 		"lib": [
-			"es5",
-			"ScriptHost",
+			"es6",
 			"DOM",
 		]
 	},
-	"files": [
-		"../index.ts",
-		"../src/Reader.ts",
-		"../src/CallbackParam.ts",
-		"../src/Writer.ts",
-		"../src/Metadata.ts",
-		"hello-world.ts",
+	"include": [
+		"../**/*.ts"
+	],
+	"exclude": [
+		"examples/**/*.ts",
+		"tests/**/*.ts"
 	]
 }

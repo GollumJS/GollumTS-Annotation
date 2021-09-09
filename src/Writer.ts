@@ -1,39 +1,53 @@
 
 import {Metadata} from "./Metadata";
 
+type WriterAnnotations = {
+	clazz: any[],
+	properties: any,
+	parameters: any,
+	cache: any
+};
+
 export class Writer {
 	
-	public static readonly annotations: Map<any, {
-		clazz: any[],
-		properties: any,
-		cache: any
-	}> = new Map();
+	public static readonly annotations: Map<any, WriterAnnotations> = new Map<any, WriterAnnotations>();
 	
 	public static write(
 		annotation: any,
 		data: any = {},
 		callback: (
 			null |
-			((target: any) => void) |
-			((target: any, propertyKey: string, descriptor: PropertyDescriptor) => void)
+			((target: any, propertyKey?: string, parameter?: number) => any)
 		) = null
-	) {
+	): any {
 		
-		let metadata = new Metadata(annotation, data);
+		const metadata = new Metadata(annotation, data);
 		
-		return function (target: any, propertyKey: string = null, descriptor: PropertyDescriptor = null) {
+		return function (target: any, propertyKey: string = null, parameter: number = null): any {
+
+			parameter = isNaN(parameter) ? null : parameter;
 			
 			let annotations = Writer.annotations.get(target);
 			if (!annotations) {
 				annotations = {
 					clazz: [],
 					properties: {},
+					parameters: {},
 					cache: {}
 				};
 				Writer.annotations.set(target, annotations);
 			}
+			if (parameter !== null) {
+				if (!annotations.parameters[propertyKey]) {
+					annotations.parameters[propertyKey] = {};
+				}
+				if (!annotations.parameters[propertyKey][parameter]) {
+					annotations.parameters[propertyKey][parameter] = [];
+				}
+				annotations.parameters[propertyKey][parameter].push(metadata);
+			} else
 			if (propertyKey) {
-				if (!annotations.properties.hasOwnProperty(propertyKey)) {
+				if (!annotations.properties[propertyKey]) {
 					annotations.properties[propertyKey] = [];
 				}
 				annotations.properties[propertyKey].push(metadata);
@@ -42,7 +56,7 @@ export class Writer {
 			}
 			
 			if (callback) {
-				const result = (<Function>callback)(target, propertyKey, descriptor);
+				const result = (<Function>callback)(target, propertyKey, parameter);
 				if (result) {
 					return result;
 				}

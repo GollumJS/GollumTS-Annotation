@@ -1,11 +1,16 @@
 {
-  "name": "gollumts-annotation",
-  "version": "4.0.0",
+  "name": "@gollumts/annotation",
+  "version": "1.0.0",
   "description": "Add simple persistant annotation on TS class.",
   "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
     "build": "node node_modules/typescript/bin/tsc -p tsconfig.json",
-    "build:exemples": "node node_modules/typescript/bin/tsc -p exemples/tsconfig.json"
+    "build:exemples": "node node_modules/typescript/bin/tsc -p exemples/tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -29,25 +34,14 @@
     "LICENSE",
     "tsconfig.json",
     "package.json",
-    "index.ts",
-    "src/Reader.ts",
-    "src/CallbackParam.ts",
-    "src/Writer.ts",
-    "src/Metadata.ts",
-    "index.js",
-    "src/Reader.js",
-    "src/CallbackParam.js",
-    "src/Writer.js",
-    "src/Metadata.js",
-    "index.js.map",
-    "src/Reader.js.map",
-    "src/CallbackParam.js.map",
-    "src/Writer.js.map",
-    "src/Metadata.js.map",
-    "exemples/tsconfig.json",
-    "exemples/hello-world.ts"
+    "**/*.ts",
+    "**/*.js",
+    "**/*.js.map"
   ],
   "devDependencies": {
-    "typescript": "^2.5.3"
+    "@types/jest": "^27.0.1",
+    "jest": "^27.1.1",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
   }
 }

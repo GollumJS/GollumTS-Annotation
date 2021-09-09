@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Metadata = void 0;
 var Metadata = (function () {
     function Metadata(annotation, data) {
         this._annotation = annotation;
@@ -9,14 +10,14 @@ var Metadata = (function () {
         get: function () {
             return this._annotation;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Metadata.prototype, "data", {
         get: function () {
             return this._data;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return Metadata;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Writer = void 0;
 var Metadata_1 = require("./Metadata");
 var Writer = (function () {
     function Writer() {
@@ -8,20 +9,31 @@ var Writer = (function () {
         if (data === void 0) { data = {}; }
         if (callback === void 0) { callback = null; }
         var metadata = new Metadata_1.Metadata(annotation, data);
-        return function (target, propertyKey, descriptor) {
+        return function (target, propertyKey, parameter) {
             if (propertyKey === void 0) { propertyKey = null; }
-            if (descriptor === void 0) { descriptor = null; }
+            if (parameter === void 0) { parameter = null; }
+            parameter = isNaN(parameter) ? null : parameter;
             var annotations = Writer.annotations.get(target);
             if (!annotations) {
                 annotations = {
                     clazz: [],
                     properties: {},
+                    parameters: {},
                     cache: {}
                 };
                 Writer.annotations.set(target, annotations);
             }
-            if (propertyKey) {
-                if (!annotations.properties.hasOwnProperty(propertyKey)) {
+            if (parameter !== null) {
+                if (!annotations.parameters[propertyKey]) {
+                    annotations.parameters[propertyKey] = {};
+                }
+                if (!annotations.parameters[propertyKey][parameter]) {
+                    annotations.parameters[propertyKey][parameter] = [];
+                }
+                annotations.parameters[propertyKey][parameter].push(metadata);
+            }
+            else if (propertyKey) {
+                if (!annotations.properties[propertyKey]) {
                     annotations.properties[propertyKey] = [];
                 }
                 annotations.properties[propertyKey].push(metadata);
@@ -30,7 +42,7 @@ var Writer = (function () {
                 annotations.clazz.push(metadata);
             }
             if (callback) {
-                var result = callback(target, propertyKey, descriptor);
+                var result = callback(target, propertyKey, parameter);
                 if (result) {
                     return result;
                 }

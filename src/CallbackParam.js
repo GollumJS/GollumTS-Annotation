@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Callback = exports.CallbackParamObject = void 0;
 var CallbackParamObject = (function () {
     function CallbackParamObject(callback) {
         this._callback = callback;
@@ -8,7 +9,7 @@ var CallbackParamObject = (function () {
         get: function () {
             return this._callback;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return CallbackParamObject;
