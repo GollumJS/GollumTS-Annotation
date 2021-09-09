@@ -1,5 +1,10 @@
 # GollumTS-Annotation
 
+[![Build Status](https://travis-ci.com/GollumJS/gollumts-annotation.svg?branch=master)](https://app.travis-ci.com/github/GollumJS/GollumTS-Annotation)
+[![Coverage](https://coveralls.io/repos/github/GollumJS/GollumTS-Annotation/badge.svg?branch=master)](https://coveralls.io/github/GollumJS/GollumTS-Annotation)
+[![Licence](https://img.shields.io/npm/l/@gollumts/annotation.svg?colorB=4B9081)](https://github.com/GollumJS/GollumTS-Annotation/blob/master/LICENSE)
+[![NPM version](https://img.shields.io/npm/v/@gollumts/annotation.svg)](https://www.npmjs.com/package/@gollumts/annotation)
+
 Add persistent annotation on TS class.
 
 
