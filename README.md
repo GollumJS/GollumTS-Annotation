@@ -24,7 +24,6 @@ export function CustomAnnotation(data1, data2) {
 	});
 }
 
-
 @CustomAnnotation('Hello', 'world')
 export class MyClass {
 
