@@ -1,6 +1,6 @@
 {
   "name": "@gollum-ts/annotation",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Add simple persistant annotation on TS class.",
   "main": "index.js",
   "directories": {
