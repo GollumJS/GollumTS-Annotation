@@ -1,6 +1,6 @@
 # GollumTS-Annotation
 
-Add persistant annotation on TS class.
+Add persistent annotation on TS class.
 
 
 ## Install
