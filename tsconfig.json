@@ -7,6 +7,8 @@
 		"preserveConstEnums": true,
 		"sourceMap": true,
 		"experimentalDecorators": true,
+		"declaration": true,
+		"declarationDir": "dist/typings",
 		"lib": [
 			"es6"
 		]

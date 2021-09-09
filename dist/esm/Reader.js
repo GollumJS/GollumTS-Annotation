@@ -386,12 +386,12 @@ export class Reader {
         return null;
     }
     static recurciveFind(functionName, target, ...args) {
-        let result = this['get' + functionName].apply(this, [target].concat(args));
+        let result = this['get' + functionName](target, ...args);
         if (typeof target.prototype !== 'undefined') {
-            result = result.concat(this['find' + functionName].apply(this, [target.prototype].concat(args)));
+            result = result.concat(this['find' + functionName](target.prototype, ...args));
         }
         return result
-            .concat(this['find' + functionName].apply(this, [Object.getPrototypeOf(target)].concat(args)))
+            .concat(this['find' + functionName](Object.getPrototypeOf(target), ...args))
             .filter((v, i, a) => a.indexOf(v) === i);
     }
 }

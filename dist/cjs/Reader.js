@@ -1,4 +1,13 @@
 "use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Reader = void 0;
 var Metadata_1 = require("./Metadata");
@@ -407,12 +416,12 @@ var Reader = (function () {
         for (var _i = 2; _i < arguments.length; _i++) {
             args[_i - 2] = arguments[_i];
         }
-        var result = this['get' + functionName].apply(this, [target].concat(args));
+        var result = this['get' + functionName].apply(this, __spreadArray([target], args, false));
         if (typeof target.prototype !== 'undefined') {
-            result = result.concat(this['find' + functionName].apply(this, [target.prototype].concat(args)));
+            result = result.concat(this['find' + functionName].apply(this, __spreadArray([target.prototype], args, false)));
         }
         return result
-            .concat(this['find' + functionName].apply(this, [Object.getPrototypeOf(target)].concat(args)))
+            .concat(this['find' + functionName].apply(this, __spreadArray([Object.getPrototypeOf(target)], args, false)))
             .filter(function (v, i, a) { return a.indexOf(v) === i; });
     };
     return Reader;
