@@ -5,7 +5,7 @@ Add persistant annotation on TS class.
 
 ## Install
 ```
-npm install gollumts-annotation
+npm install @gollumts/annotation
 ```
 
 
@@ -30,6 +30,12 @@ export class MyClass {
 
 	@CustomAnnotation('Every', 'body')
 	public field ;
+
+	public method(
+	    @CustomAnnotation('param', '1') param1,
+        @CustomAnnotation('param', '2') param2
+    ) {}
+
 
 }
 
@@ -74,6 +80,32 @@ let annotations = Reader.findPropertyAnnotations(myObject.constructor, 'field');
 //        }
 //    }
 // ]
+// Property annotation //
+
+let annotations = Reader.findParameterAnnotation(MyClass, 'field', 0);
+let annotations = Reader.findParameterAnnotation(myObject.constructor, 'field', 0);
+// annotations: Metatdata = [
+//    0: {
+//        annotation: CustomAnnotation,
+//        data: {
+//             data1: 'param',
+//             data1: '1'
+//        }
+//    }
+// ]
+
+let annotations = Reader.findParameterAnnotation(MyClass, 'field', 1);
+let annotations = Reader.findParameterAnnotation(myObject.constructor, 'field', 1);
+// annotations: Metatdata = [
+//    0: {
+//        annotation: CustomAnnotation,
+//        data: {
+//             data1: 'param',
+//             data1: '2'
+//        }
+//    }
+// ]
+
 
 let annotation = Reader.findPropertyAnnotation(MyClass, 'field', CustomAnnotation);
 let annotation = Reader.findPropertyAnnotation(myObject.constructor, 'field', CustomAnnotation);
