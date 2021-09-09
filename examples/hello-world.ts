@@ -1,4 +1,4 @@
-import {Writer, Reader} from "..";
+import {Writer, Reader} from '..';
 
 export function CustomAnnotation(data1, data2) {
 	

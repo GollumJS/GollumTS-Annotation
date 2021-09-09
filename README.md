@@ -19,7 +19,7 @@ npm install @gollum-ts/annotation
 ## Create annotation
 
 ```typescript
-import {Writer} from "gollumts-annotation";
+import {Writer} from '@gollum-ts/annotation';
 
 
 export function CustomAnnotation(data1, data2) {
@@ -50,7 +50,7 @@ export class MyClass {
 
 
 ```typescript
-import {Reader} from "gollumts-annotation";
+import {Reader} from '@gollum-ts/annotation';
 
 let myObject = new MyClass();
 
@@ -121,7 +121,7 @@ let annotation = Reader.findPropertyAnnotation(myObject.constructor, 'field', Cu
 ## Create annotation with callback
 
 ```typescript
-import {Writer} from "gollumts-annotation";
+import {Writer} from '@gollum-ts/annotation';
 
 export function CustomAnnotationCallback(data1, data2) {
 	return Writer.write(CustomAnnotationCallback, {
@@ -137,7 +137,7 @@ export function CustomAnnotationCallback(data1, data2) {
 ## List properties for annotations
 
 ```typescript
-import {Reader} from "gollumts-annotation";
+import {Reader} from '@gollum-ts/annotation';
 
 let properties: string[] = Reader.findPropertiesNameByAnnotation(MyClass, CustomAnnotation);
 let properties: string[] = Reader.findPropertiesNameByAnnotations(MyClass, [ CustomAnnotation, ... ]);
