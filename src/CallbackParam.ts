@@ -11,6 +11,6 @@ export class CallbackParamObject {
 	}
 }
 
-export function Callback(callback: Function) {
+export function Callback(callback: Function): any {
 	return new CallbackParamObject(callback);
 }

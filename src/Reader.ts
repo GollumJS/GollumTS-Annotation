@@ -48,13 +48,13 @@ export class Reader {
 	}
 	
 	public static getPropertiesNameByAnnotation(clazz: any, annotation: any): string[] {
-		let properties: string[] = [];
+		const properties: string[] = [];
 		const annotationsMap = Writer.annotations.get(clazz);
 		if (annotationsMap) {
 			
-			for (let prop of Object.keys(annotationsMap.properties)) {
-				let metadatas: Metadata[] =  annotationsMap.properties[prop];
-				for(let m of metadatas) {
+			for (const prop of Object.keys(annotationsMap.properties)) {
+				const metadatas: Metadata[] =  annotationsMap.properties[prop];
+				for(const m of metadatas) {
 					if (annotation == m.annotation) {
 						properties.push(prop);
 						break
@@ -109,7 +109,7 @@ export class Reader {
 	}
 	
 	public static getPropertiesNameByParameterAnnotation(clazz: any, annotation: any): string[] {
-		let properties: string[] = [];
+		const properties: string[] = [];
 		const annotationsMap = Writer.annotations.get(clazz);
 		
 		if (annotationsMap) {
@@ -133,16 +133,16 @@ export class Reader {
 	
 	
 	public static getParameterIndexesByAnnotation(clazz: any, property: string, annotation: any): number[] {
-		let indexs: number[] = [];
+		const indexs: number[] = [];
 		const annotationsMap = Writer.annotations.get(clazz);
 		if (annotationsMap) {
 			
 			if (annotationsMap.parameters.hasOwnProperty(property)) {
 				
 				for (const index of Object.keys(annotationsMap.parameters[property])) {
-					
-					let metadatas: Metadata[] = annotationsMap.parameters[property][index];
-					for(let m of metadatas) {
+
+					const metadatas: Metadata[] = annotationsMap.parameters[property][index];
+					for(const m of metadatas) {
 						if (annotation == m.annotation) {
 							indexs.push(parseInt(index.toString(), 10));
 							break
@@ -468,7 +468,7 @@ export class Reader {
 	
 	
 	private static unCallback(metadata: Metadata): Metadata {
-		for (let key in metadata.data) {
+		for (const key of Object.keys(metadata.data)) {
 			if (metadata.data[key] instanceof CallbackParamObject) {
 				metadata.data[key] = metadata.data[key].callback();
 			} else {
@@ -483,7 +483,7 @@ export class Reader {
 	}
 	
 	private static search(list: Metadata[], annotation: any): any|null {
-		for(let metadata of list) {
+		for(const metadata of list) {
 			if (metadata.annotation == annotation) {
 				return metadata.data;
 			}
@@ -493,14 +493,14 @@ export class Reader {
 	
 	private static recurciveFind(functionName: string, target: any, ...args: any[]): any|null {
 		
-		let result = this['get'+functionName].apply(this, [ target ].concat(args));
+		let result = this['get'+functionName](target, ...args);
 		
 		if (typeof target.prototype !== 'undefined') {
-			result = result.concat(this['find'+functionName].apply(this, [ target.prototype ].concat(args)));
+			result = result.concat(this['find'+functionName](target.prototype, ...args));
 		}
 		return result
 			.concat(
-				this['find'+functionName].apply(this, [ Object.getPrototypeOf(target) ].concat(args))
+				this['find'+functionName](Object.getPrototypeOf(target), ...args)
 			)
 			.filter((v, i, a) => a.indexOf(v) === i)
 		;

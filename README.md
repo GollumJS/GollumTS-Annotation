@@ -37,9 +37,9 @@ export class MyClass {
 	public field ;
 
 	public method(
-	    @CustomAnnotation('param', '1') param1,
-        @CustomAnnotation('param', '2') param2
-    ) {}
+		@CustomAnnotation('param', '1') param1,
+		@CustomAnnotation('param', '2') param2
+	) {}
 
 
 }

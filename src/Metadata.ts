@@ -8,10 +8,11 @@ export class Metadata {
 		this._data       = data;
 	}
 	
-	public get annotation() {
+	public get annotation(): any {
 		return this._annotation;
 	}
-	public get data() {
+	
+	public get data(): any {
 		return this._data;
 	}
 	

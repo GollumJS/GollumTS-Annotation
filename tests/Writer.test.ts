@@ -1,4 +1,4 @@
-import {Writer} from '../src/Writer';
+import {Writer} from '../src';
 
 describe('Writer test', () => {
 
@@ -6,11 +6,6 @@ describe('Writer test', () => {
 		Writer.annotations.clear();
 	});
 	
-	test('dummy construct', () => {
-		new Writer();
-		expect(true).toStrictEqual(true);
-	});
-
 	test('write class', () => {
 
 		const Annotation = (value) => {
@@ -29,7 +24,7 @@ describe('Writer test', () => {
 		const entries = Array.from(Writer.annotations.entries());
 		expect(entries.length).toStrictEqual(1);
 
-		const [ key, metadata ] = entries[0];
+		const [ key, metadata ] = entries[0] as any[];
 
 		expect(key).toStrictEqual(A);
 		expect(metadata.clazz.length).toStrictEqual(3);
@@ -66,7 +61,7 @@ describe('Writer test', () => {
 		const entries = Array.from(Writer.annotations.entries());
 		expect(entries.length).toStrictEqual(1);
 
-		const [ key, metadata ] = entries[0];
+		const [ key, metadata ] = entries[0] as any[];
 
 		expect(key).toStrictEqual(A.prototype);
 
@@ -110,7 +105,7 @@ describe('Writer test', () => {
 		const entries = Array.from(Writer.annotations.entries());
 		expect(entries.length).toStrictEqual(1);
 
-		const [ key, metadata ] = entries[0];
+		const [ key, metadata ] = entries[0] as any[];
 
 		expect(key).toStrictEqual(A.prototype);
 

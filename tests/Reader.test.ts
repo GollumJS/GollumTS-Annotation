@@ -1,7 +1,4 @@
-import {Writer} from '../src/Writer';
-import {Reader} from '../src/Reader';
-import {Metadata} from '../src/Metadata';
-import {Callback} from '../src/CallbackParam';
+import {Writer, Reader, Metadata, Callback, CallbackParamObject} from '../src';
 
 describe('Reader test', () => {
 
@@ -9,11 +6,6 @@ describe('Reader test', () => {
 		Writer.annotations.clear();
 	});
 	
-	test('dummy construct', () => {
-		new Reader();
-		expect(true).toStrictEqual(true);
-	});
-
 	test('getClassAnnotations', () => {
 		
 		const Annotation = (value) => {
@@ -1253,7 +1245,11 @@ describe('Reader test', () => {
 			data3: 'data3'
 		});
 		
+		expect(metadata.data.data2).toBeInstanceOf(CallbackParamObject);
+		
 		const result = Reader['unCallback'](metadata);
+
+		expect(metadata.data.data2).not.toBeInstanceOf(CallbackParamObject);
 		
 		expect(result.data).toEqual({
 			data1: 'data1',

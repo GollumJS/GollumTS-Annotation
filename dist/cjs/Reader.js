@@ -382,7 +382,8 @@ var Reader = (function () {
         return parameters.filter(function (v, i, a) { return a.indexOf(v) === i; }).sort();
     };
     Reader.unCallback = function (metadata) {
-        for (var key in metadata.data) {
+        for (var _i = 0, _a = Object.keys(metadata.data); _i < _a.length; _i++) {
+            var key = _a[_i];
             if (metadata.data[key] instanceof CallbackParam_1.CallbackParamObject) {
                 metadata.data[key] = metadata.data[key].callback();
             }
