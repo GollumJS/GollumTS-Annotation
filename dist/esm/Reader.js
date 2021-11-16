@@ -1,9 +1,12 @@
-import { Metadata } from "./Metadata";
-import { CallbackParamObject } from "./CallbackParam";
-import { Writer } from "./Writer";
-export class Reader {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Reader = void 0;
+const Metadata_1 = require("./Metadata");
+const CallbackParam_1 = require("./CallbackParam");
+const Writer_1 = require("./Writer");
+class Reader {
     static getClassAnnotations(clazz) {
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             return [];
         }
@@ -13,7 +16,7 @@ export class Reader {
         return this.search(this.getClassAnnotations(clazz), annotation);
     }
     static getPropertyAnnotations(clazz, property) {
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             return [];
         }
@@ -26,7 +29,7 @@ export class Reader {
         return this.search(this.getPropertyAnnotations(clazz, property), annotation);
     }
     static getPropertiesNameWithAnnotations(clazz) {
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (annotationsMap) {
             return Object.keys(annotationsMap.properties)
                 .filter((v, i, a) => a.indexOf(v) === i);
@@ -35,7 +38,7 @@ export class Reader {
     }
     static getPropertiesNameByAnnotation(clazz, annotation) {
         const properties = [];
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (annotationsMap) {
             for (const prop of Object.keys(annotationsMap.properties)) {
                 const metadatas = annotationsMap.properties[prop];
@@ -50,7 +53,7 @@ export class Reader {
         return properties.filter((v, i, a) => a.indexOf(v) === i);
     }
     static getParameterAnnotations(clazz, property, parameter) {
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             return [];
         }
@@ -63,7 +66,7 @@ export class Reader {
         return this.search(this.getParameterAnnotations(clazz, property, parameter), annotation);
     }
     static getPropertiesNameWithParameterAnnotations(clazz) {
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (annotationsMap) {
             return Object.keys(annotationsMap.parameters)
                 .filter((v, i, a) => a.indexOf(v) === i);
@@ -71,7 +74,7 @@ export class Reader {
         return [];
     }
     static getParameterIndexesWithAnnotations(clazz, property) {
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (annotationsMap && annotationsMap.parameters.hasOwnProperty(property)) {
             return Object.keys(annotationsMap.parameters[property])
                 .map(index => parseInt(index.toString(), 10))
@@ -82,7 +85,7 @@ export class Reader {
     }
     static getPropertiesNameByParameterAnnotation(clazz, annotation) {
         const properties = [];
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (annotationsMap) {
             for (const prop of Object.keys(annotationsMap.parameters)) {
                 for (const index of Object.keys(annotationsMap.parameters[prop])) {
@@ -100,7 +103,7 @@ export class Reader {
     }
     static getParameterIndexesByAnnotation(clazz, property, annotation) {
         const indexs = [];
-        const annotationsMap = Writer.annotations.get(clazz);
+        const annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (annotationsMap) {
             if (annotationsMap.parameters.hasOwnProperty(property)) {
                 for (const index of Object.keys(annotationsMap.parameters[property])) {
@@ -122,7 +125,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -130,7 +133,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.clazz) {
             annotationsMap.cache.clazz = this.recurciveFind('ClassAnnotations', clazz);
@@ -144,7 +147,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -152,7 +155,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.properties) {
             annotationsMap.cache.properties = {};
@@ -169,7 +172,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -177,7 +180,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.properties_with) {
             annotationsMap.cache.properties_with = this.recurciveFind('PropertiesNameWithAnnotations', clazz);
@@ -188,7 +191,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -196,7 +199,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.properties_by) {
             annotationsMap.cache.properties_by = [];
@@ -225,7 +228,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -233,7 +236,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.parameters) {
             annotationsMap.cache.parameters = {};
@@ -253,7 +256,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -261,7 +264,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.properties_with_parameter) {
             annotationsMap.cache.properties_with_parameter = this.recurciveFind('PropertiesNameWithParameterAnnotations', clazz);
@@ -272,7 +275,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -280,7 +283,7 @@ export class Reader {
                 parameters: {},
                 cache: {},
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.parameters_with) {
             annotationsMap.cache.parameters_with = {};
@@ -294,7 +297,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -302,7 +305,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.properties_by_annotation) {
             annotationsMap.cache.properties_by_annotation = [];
@@ -331,7 +334,7 @@ export class Reader {
         if (clazz == null || clazz === Object || clazz === Object.prototype) {
             return [];
         }
-        let annotationsMap = Writer.annotations.get(clazz);
+        let annotationsMap = Writer_1.Writer.annotations.get(clazz);
         if (!annotationsMap) {
             annotationsMap = {
                 clazz: [],
@@ -339,7 +342,7 @@ export class Reader {
                 parameters: {},
                 cache: {}
             };
-            Writer.annotations.set(clazz, annotationsMap);
+            Writer_1.Writer.annotations.set(clazz, annotationsMap);
         }
         if (!annotationsMap.cache.parameter_by) {
             annotationsMap.cache.parameter_by = {};
@@ -368,14 +371,14 @@ export class Reader {
     }
     static unCallback(metadata) {
         for (const key of Object.keys(metadata.data)) {
-            if (metadata.data[key] instanceof CallbackParamObject) {
+            if (metadata.data[key] instanceof CallbackParam_1.CallbackParamObject) {
                 metadata.data[key] = metadata.data[key].callback();
             }
             else {
                 metadata.data[key] = metadata.data[key];
             }
         }
-        return new Metadata(metadata.annotation, metadata.data);
+        return new Metadata_1.Metadata(metadata.annotation, metadata.data);
     }
     static search(list, annotation) {
         for (const metadata of list) {
@@ -395,4 +398,5 @@ export class Reader {
             .filter((v, i, a) => a.indexOf(v) === i);
     }
 }
+exports.Reader = Reader;
 //# sourceMappingURL=Reader.js.map
