@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Metadata = void 0;
-class Metadata {
+export class Metadata {
     constructor(annotation, data) {
         this._annotation = annotation;
         this._data = data;
@@ -13,5 +10,4 @@ class Metadata {
         return this._data;
     }
 }
-exports.Metadata = Metadata;
 //# sourceMappingURL=Metadata.js.map

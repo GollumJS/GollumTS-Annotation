@@ -1,9 +1,10 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
+		"target": "ES6",
+		"module": "esnext",
+		"moduleResolution": "node",
 		"outDir": "dist/esm",
 		"target": "es6",
-		"module": "commonjs",
-		"moduleResolution": "node"
 	}
 }

@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Writer = void 0;
-const Metadata_1 = require("./Metadata");
-class Writer {
+import { Metadata } from "./Metadata";
+export class Writer {
     static write(annotation, data = {}, callback = null) {
-        const metadata = new Metadata_1.Metadata(annotation, data);
+        const metadata = new Metadata(annotation, data);
         return function (target, propertyKey = null, parameter = null) {
             parameter = isNaN(parameter) ? null : parameter;
             let annotations = Writer.annotations.get(target);
@@ -44,6 +41,5 @@ class Writer {
         };
     }
 }
-exports.Writer = Writer;
 Writer.annotations = new Map();
 //# sourceMappingURL=Writer.js.map
